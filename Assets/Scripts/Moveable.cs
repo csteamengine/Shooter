@@ -6,12 +6,12 @@ public class Moveable : MonoBehaviour
 {
 	private float distance;
 	private bool grabbed = false;
-	private Rigidbody rigidbody;
+	private Rigidbody rb;
 
 	// Start is called before the first frame update
 	void Start()
     {
-		rigidbody = gameObject.GetComponent<Rigidbody>();
+		rb = gameObject.GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -24,30 +24,30 @@ public class Moveable : MonoBehaviour
 
 	public void UpdateVectors()
 	{
-		rigidbody.velocity = Vector3.zero;
-		rigidbody.angularVelocity = Vector3.zero;
+		rb.velocity = Vector3.zero;
+		rb.angularVelocity = Vector3.zero;
 	}
 
     public void Throw(Vector3 vector, float throwForce)
 	{
 		Release();
-		rigidbody.AddForce(vector * throwForce, ForceMode.Impulse);
+		rb.AddForce(vector * throwForce, ForceMode.Impulse);
 	}
 
     public bool Grab(Camera fpsCam)
 	{
 		grabbed = true;
-		rigidbody.useGravity = false;
-		rigidbody.detectCollisions = true;
+		rb.useGravity = false;
+		rb.detectCollisions = true;
 		transform.parent = fpsCam.transform;
 		return true;
 	}
 
     public void Release()
 	{
-        Vector3 velocity = rigidbody.velocity;
+        Vector3 velocity = rb.velocity;
 		grabbed = false;
-		rigidbody.useGravity = true;
+		rb.useGravity = true;
 		transform.parent = null;
 	}
 }

@@ -42,10 +42,7 @@ public class Interact : MonoBehaviour
             target = hit.transform.GetComponent<Moveable>();
             if (target != null)
             {
-                if (target.Grab(fpsCam))
-                {
-                    holdingObject = true;
-                }
+                holdingObject = target.Grab(fpsCam);
             }
         }
     }
