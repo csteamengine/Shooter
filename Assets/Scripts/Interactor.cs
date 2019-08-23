@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interact : MonoBehaviour
+public class Interactor : MonoBehaviour
 {
     public float grabDistance;
     public Camera fpsCam;
     public float throwForce;
 
     private bool holdingObject;
-    private Moveable target;
+    private MoveableObject target;
 
 
     // Start is called before the first frame update
@@ -39,7 +39,7 @@ public class Interact : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, grabDistance))
         {
-            target = hit.transform.GetComponent<Moveable>();
+            target = hit.transform.GetComponent<MoveableObject>();
             if (target != null)
             {
                 holdingObject = target.Grab(fpsCam);

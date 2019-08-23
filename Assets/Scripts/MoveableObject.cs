@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Moveable : MonoBehaviour
+public class MoveableObject : MonoBehaviour
 {
 	private float distance;
 	private bool grabbed = false;
