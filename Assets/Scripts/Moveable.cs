@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Moveable : MonoBehaviour
 {
-	public float grabDistance;
-	public Camera fpsCam;
-	public float throwForce;
-
 	private float distance;
 	private bool grabbed = false;
 	private Rigidbody rigidbody;
@@ -19,63 +15,32 @@ public class Moveable : MonoBehaviour
     }
 
     void Update()
-	{ 
-		if (grabbed)
-		{
-			UpdatePosition();
-			DetectRelease();
-			DetectThrow();
-		}
-	}
-
-	void OnMouseDown()
-	{
-		RaycastHit hit;
-		if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, grabDistance))
-		{
-			Grab();
-		}
-	}
-
-    void OnMouseUp()
 	{
 		if (grabbed)
 		{
-			Release();
+			UpdateVectors();
 		}
 	}
 
-	public void UpdatePosition()
+	public void UpdateVectors()
 	{
-		distance = Vector3.Distance(transform.position, fpsCam.transform.position);
 		rigidbody.velocity = Vector3.zero;
 		rigidbody.angularVelocity = Vector3.zero;
-		
 	}
 
-    public void DetectThrow()
+    public void Throw(Vector3 vector, float throwForce)
 	{
-		if (Input.GetKeyDown("e"))
-		{
-			Release();
-			rigidbody.AddForce(fpsCam.transform.forward * throwForce, ForceMode.Impulse);
-		}
+		Release();
+		rigidbody.AddForce(vector * throwForce, ForceMode.Impulse);
 	}
 
-    public void DetectRelease()
-	{
-		if (distance > grabDistance)
-		{
-			Release();
-		}
-	}
-
-    public void Grab()
+    public bool Grab(Camera fpsCam)
 	{
 		grabbed = true;
 		rigidbody.useGravity = false;
 		rigidbody.detectCollisions = true;
 		transform.parent = fpsCam.transform;
+		return true;
 	}
 
     public void Release()
@@ -83,7 +48,6 @@ public class Moveable : MonoBehaviour
         Vector3 velocity = rigidbody.velocity;
 		grabbed = false;
 		rigidbody.useGravity = true;
-		rigidbody.AddForce(Vector3.forward);
 		transform.parent = null;
 	}
 }
