@@ -19,6 +19,9 @@ namespace UnityStandardAssets.Vehicles.Ball
         private bool jump; // whether the jump button is currently pressed
         private Rigidbody rb;
 
+        public Vector3 GetMove(){
+            return move;
+        }
 
         private void Awake()
         {
